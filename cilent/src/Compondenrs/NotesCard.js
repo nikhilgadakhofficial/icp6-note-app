@@ -2,6 +2,7 @@ import React from 'react'
 import './NotesCard.css'
 import DeleteIcon from "./bin.png"
 import Update from "./pen.png"
+import Add from "./new-document.png"
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
@@ -21,6 +22,9 @@ function NotesCard({_id,title,content,category,loadNotes}) {
     <img src={DeleteIcon} alt='bin.png' className='icon'onClick={deletenote} />
     <Link to={`/update/${_id}`}>
     <img src={Update} alt='ben.png' className='icon-up' />
+    </Link>
+    <Link to={`/new`}>
+    <img src={Add} alt='ben.png' className='icon-up-1' />
     </Link>
 </div>
   )
