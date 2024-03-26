@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
-import './NewNotes.css'
+import React, { useEffect, useState } from 'react'
+import './UpdataedNote.css'
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import {useParams} from 'react-router-dom'
+
 
 
 function NewNotes() {
@@ -9,24 +11,41 @@ function NewNotes() {
   const [category,setCategory] = useState('');
   const [content,setContent] = useState('');
 
-  const addNote =async ()=>{
-    const response = await axios.post(`${process.env.REACT_APP_URL}/notes`,
-    {
-      title :title,
-      category : category,
-      content : content
-    })
-    toast.success(response.data.message)
-    setTitile('')
-    setContent('')
-    setCategory('')
+  const loadNote = async (id) =>{
+    if(!id) return
+    const response = await axios.get(`${process.env.REACT_APP_URL}/notes/${id}`)
+
+    setTitile(response.data.data.title)
+    setCategory(response.data.data.category)
+    setContent(response.data.data.content)
   }
 
+  const updateNote = async ()=>{
+
+    const response = await axios.put(`${process.env.REACT_APP_URL}/notes/${id}`,{
+        title : title,
+            content : content,
+            category : category
+    })
+  toast.success(response.data.message)
+  window.location.href='/'
+  }
+ 
+   const {id} = useParams()
+
+   useEffect(()=>{
+    loadNote(id)
+   },[id])
   return (
     <div>
-      <h1 className='hading'>New Note</h1>
+      <h1 className='hading'>Update Note</h1>
 
        <form className='from-newnote'>
+        <input type='text'
+        value={id}
+        disabled
+        className='input-id'
+        />
       <input type='text'
       placeholder='Title'
       value={title}
@@ -39,6 +58,7 @@ function NewNotes() {
         setCategory(e.target.value)
       }}
       className='input-ca'>
+         <option value="general">Slect a Category</option>
         <option value="general">General</option>
         <option value="work">Work</option>
         <option value="learning">Learning</option>
@@ -54,8 +74,8 @@ function NewNotes() {
       }}
       className='input-co'/>
 
-<button type='button' onClick={addNote} className='btn'>
-        Save
+<button type='button' onClick={updateNote} className='btn'>
+        Update
         </button>
 </form>
 

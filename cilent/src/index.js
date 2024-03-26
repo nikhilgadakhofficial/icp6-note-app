@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import {createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from './Views/Home/Home';
 import NewNotes from './Views/NewNotes/NewNotes';
+import {Toaster} from 'react-hot-toast'
+import UpdataedNote from './Views/Home/UpdataedNote/UpdataedNote';
 
 const router = createBrowserRouter([
   {
@@ -12,6 +14,10 @@ const router = createBrowserRouter([
   {
     path : "/new",
     element : <NewNotes/>
+  },
+  {
+    path : "/update/:id",
+    element : <UpdataedNote/>
   }
 
 ])
@@ -21,6 +27,10 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 
-root.render(<RouterProvider router={router}/>);
+root.render(
+  <>
+  <Toaster/>
+<RouterProvider router={router}/>
+</>);
 
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import './Home.css'
+import NotesCard from '../../Compondenrs/NotesCard';
 
 function Home() {
 
@@ -17,18 +18,12 @@ function Home() {
 
   return (
     <div>
-        <h1>Home</h1>
+        <h1 className='hading-1'>All Notes</h1>
 
         {
             notes.map((note,index)=>{
-
-                return(
-                    <div>
-                        <h1>{note.title}</h1>
-                        <p>{note.content}</p>
-                        <span>{note.category}</span>
-                    </div>
-                )
+                const {_id,title,content,category} =note;
+                return(<NotesCard key={_id} _id={_id} title={title} content={content} category={category} loadNotes={loadNotes}/>)
             })
         }
     </div>

@@ -92,12 +92,12 @@ res.json({
  app.put("/notes/:id",async (req,res)=>{
     const {id} = req.params;
     
-    const {title,connect,category} = req.body;
+    const {title,content,category} = req.body;
 
     await Note.updateOne({_id:id},{
         $set: {
             title : title,
-            content : connect,
+            content : content,
             category : category
         }})
         res.json({
